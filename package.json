@@ -1,0 +1,32 @@
+{
+  "name": "pet-feeder-system",
+  "version": "1.0.0",
+  "description": "Complete Pet Feeder System with Raspberry Pi and Arduino",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "init-db": "node database/init.js"
+  },
+  "keywords": [
+    "pet-feeder",
+    "arduino",
+    "raspberry-pi",
+    "iot"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "bcrypt": "^5.1.1",
+    "socket.io": "^4.6.1",
+    "serialport": "^12.0.0",
+    "sqlite3": "^5.1.6",
+    "body-parser": "^1.20.2",
+    "cookie-parser": "^1.4.6"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}

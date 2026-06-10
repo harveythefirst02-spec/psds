@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Pet Feeder System</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-left">
+      <h1>🐾 Pet Feeder Admin</h1>
+    </div>
+    <div class="header-right">
+      <span class="admin-name" id="adminName">Admin</span>
+      <button class="btn-logout" id="btnLogout">Logout</button>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <div class="main-container">
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+      <ul class="nav-menu">
+        <li class="nav-item active" data-section="overview">
+          <span class="nav-icon">📊</span>
+          <span class="nav-text">Overview</span>
+        </li>
+        <li class="nav-item" data-section="users">
+          <span class="nav-icon">👥</span>
+          <span class="nav-text">User Management</span>
+        </li>
+        <li class="nav-item" data-section="logs">
+          <span class="nav-icon">📋</span>
+          <span class="nav-text">System Logs</span>
+        </li>
+        <li class="nav-item" data-section="device">
+          <span class="nav-icon">🔌</span>
+          <span class="nav-text">Device Monitoring</span>
+        </li>
+        <li class="nav-item" data-section="settings">
+          <span class="nav-icon">⚙️</span>
+          <span class="nav-text">System Settings</span>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Content Area -->
+    <main class="content">
+      <!-- Overview Section -->
+      <section id="overview-section" class="section active">
+        <h2 class="section-title">Dashboard Overview</h2>
+        
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon">👥</div>
+            <div class="stat-info">
+              <h3 id="totalUsers">0</h3>
+              <p>Total Users</p>
+            </div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon">✅</div>
+            <div class="stat-info">
+              <h3 id="activeUsers">0</h3>
+              <p>Active Users</p>
+            </div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon">❌</div>
+            <div class="stat-info">
+              <h3 id="disabledUsers">0</h3>
+              <p>Disabled Users</p>
+            </div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon">🍖</div>
+            <div class="stat-info">
+              <h3 id="totalFeedings">0</h3>
+              <p>Feedings Today</p>
+            </div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon">🥘</div>
+            <div class="stat-info">
+              <h3 id="foodDispensed">0</h3>
+              <p>Food Dispensed</p>
+            </div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon">💧</div>
+            <div class="stat-info">
+              <h3 id="waterDispensed">0</h3>
+              <p>Water Dispensed</p>
+            </div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon">📅</div>
+            <div class="stat-info">
+              <h3 id="activeSchedules">0</h3>
+              <p>Active Schedules</p>
+            </div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon" id="arduinoIcon">🔴</div>
+            <div class="stat-info">
+              <h3 id="arduinoStatus">Offline</h3>
+              <p>Arduino Status</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- User Management Section -->
+      <section id="users-section" class="section">
+        <div class="section-header">
+          <h2 class="section-title">User Management</h2>
+          <button class="btn btn-primary" id="btnAddUser">+ Add User</button>
+        </div>
+        
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Email</th>
+                <th>Pet Name</th>
+                <th>Pet Type</th>
+                <th>Created At</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="usersTableBody">
+              <tr>
+                <td colspan="7" class="text-center">Loading users...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- System Logs Section -->
+      <section id="logs-section" class="section">
+        <div class="section-header">
+          <h2 class="section-title">System Logs</h2>
+          <div class="filter-buttons">
+            <button class="btn btn-sm active" data-filter="all">All</button>
+            <button class="btn btn-sm" data-filter="today">Today</button>
+            <button class="btn btn-sm" data-filter="week">Week</button>
+            <button class="btn btn-sm" data-filter="month">Month</button>
+          </div>
+        </div>
+        
+        <div class="tabs">
+          <button class="tab-btn active" data-tab="system">System Logs</button>
+          <button class="tab-btn" data-tab="feeding">Feeding Logs</button>
+        </div>
+        
+        <div class="tab-content active" id="system-logs">
+          <div class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Type</th>
+                  <th>Message</th>
+                  <th>Timestamp</th>
+                </tr>
+              </thead>
+              <tbody id="systemLogsBody">
+                <tr>
+                  <td colspan="4" class="text-center">Loading logs...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        
+        <div class="tab-content" id="feeding-logs">
+          <div class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>User</th>
+                  <th>Pet Name</th>
+                  <th>Type</th>
+                  <th>Source</th>
+                  <th>Status</th>
+                  <th>Timestamp</th>
+                </tr>
+              </thead>
+              <tbody id="feedingLogsBody">
+                <tr>
+                  <td colspan="7" class="text-center">Loading logs...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Device Monitoring Section -->
+      <section id="device-section" class="section">
+        <h2 class="section-title">Device Monitoring</h2>
+        
+        <div class="device-grid">
+          <div class="device-card">
+            <h3>Arduino Status</h3>
+            <div class="device-status" id="deviceArduinoStatus">
+              <span class="status-indicator offline"></span>
+              <span class="status-text">Offline</span>
+            </div>
+            <div class="device-info">
+              <p><strong>Port:</strong> <span id="devicePort">N/A</span></p>
+              <p><strong>Baud Rate:</strong> <span id="deviceBaud">115200</span></p>
+              <p><strong>Last Response:</strong> <span id="deviceLastResponse">Never</span></p>
+            </div>
+          </div>
+          
+          <div class="device-card">
+            <h3>Raspberry Pi Status</h3>
+            <div class="device-status">
+              <span class="status-indicator online"></span>
+              <span class="status-text">Online</span>
+            </div>
+            <div class="device-info">
+              <p><strong>Server:</strong> Node.js</p>
+              <p><strong>Database:</strong> SQLite</p>
+              <p><strong>WebSocket:</strong> Connected</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- System Settings Section -->
+      <section id="settings-section" class="section">
+        <h2 class="section-title">System Settings</h2>
+        
+        <form id="settingsForm" class="settings-form">
+          <div class="form-group">
+            <label>Default Feed Duration (ms)</label>
+            <input type="number" id="feedDuration" name="feed_duration" min="1000" max="10000" step="100">
+            <small>Duration for servo to dispense food (default: 3000ms)</small>
+          </div>
+          
+          <div class="form-group">
+            <label>Default Water Pump Duration (ms)</label>
+            <input type="number" id="pumpDuration" name="pump_duration" min="1000" max="15000" step="100">
+            <small>Duration for water pump operation (default: 5000ms)</small>
+          </div>
+          
+          <div class="form-group">
+            <label>
+              <input type="checkbox" id="notificationEnabled" name="notification_enabled">
+              Enable Notifications
+            </label>
+          </div>
+          
+          <button type="submit" class="btn btn-primary">Save Settings</button>
+        </form>
+      </section>
+    </main>
+  </div>
+
+  <!-- Add/Edit User Modal -->
+  <div id="userModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="userModalTitle">Add New User</h3>
+        <button class="modal-close">&times;</button>
+      </div>
+      <form id="userForm">
+        <input type="hidden" id="userId" name="id">
+        
+        <div class="form-group">
+          <label for="userEmail">Email / Username *</label>
+          <input type="text" id="userEmail" name="email" required>
+        </div>
+        
+        <div class="form-group" id="passwordGroup">
+          <label for="userPassword">Password *</label>
+          <input type="password" id="userPassword" name="password">
+        </div>
+        
+        <div class="form-group">
+          <label for="petName">Pet Name</label>
+          <input type="text" id="petName" name="pet_name">
+        </div>
+        
+        <div class="form-group">
+          <label for="petType">Pet Type</label>
+          <input type="text" id="petType" name="pet_type" placeholder="Dog, Cat, etc.">
+        </div>
+        
+        <div class="form-group">
+          <label for="petAge">Pet Age (years)</label>
+          <input type="number" id="petAge" name="pet_age" min="0" max="30">
+        </div>
+        
+        <div class="form-group">
+          <label for="petWeight">Pet Weight (kg)</label>
+          <input type="number" id="petWeight" name="pet_weight" min="0" max="200" step="0.1">
+        </div>
+        
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary modal-close">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save User</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Reset Password Modal -->
+  <div id="passwordModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Reset User Password</h3>
+        <button class="modal-close">&times;</button>
+      </div>
+      <form id="passwordForm">
+        <input type="hidden" id="resetUserId">
+        
+        <div class="form-group">
+          <label for="newPassword">New Password *</label>
+          <input type="password" id="newPassword" name="new_password" required minlength="6">
+        </div>
+        
+        <div class="form-group">
+          <label for="confirmPassword">Confirm Password *</label>
+          <input type="password" id="confirmPassword" required minlength="6">
+        </div>
+        
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary modal-close">Cancel</button>
+          <button type="submit" class="btn btn-primary">Reset Password</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Notification Toast -->
+  <div id="toast" class="toast"></div>
+
+  <!-- Socket.IO -->
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>
